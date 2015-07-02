@@ -85,4 +85,9 @@ public class FuncStepDef {
     public void the_Subject_should_be(String arg1) throws Throwable {
         Assert.assertTrue(homePage.checkMessage(arg1));
     }
+
+    @Then("^the Subject should be \"(.*?)\" and fail$")
+    public void the_Subject_should_be_fail(String arg1) throws Throwable {
+        Assert.assertFalse(homePage.checkMessage(arg1));
+    }
 }
