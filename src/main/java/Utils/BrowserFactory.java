@@ -2,6 +2,7 @@ package Utils;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -67,10 +68,18 @@ protected static WebDriver startRemoteWebBrowser(String browser,String URL)
        //    System.setProperty("webdriver.chrome.driver", "/Users/sriramangajala/Documents/Automation/chromedriver");
             //  driver=new ChromeDriver();
         	System.out.println("grid started...");
-        	DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-            capabilities.setCapability("browser", AutomationConstants.BROWSER_TYPE);
+        	DesiredCapabilities capabilities = new DesiredCapabilities();
+            if(System.getProperty("Browser").equalsIgnoreCase("firefox"))
+            {
+                capabilities = DesiredCapabilities.firefox();
+            }
+            else if(System.getProperty("Browser").equalsIgnoreCase("chrome"))
+            {
+                capabilities = DesiredCapabilities.chrome();
+            }
+
         	capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-//        	capabilities.setCapability("platform", Platform.VISTA);
+        	capabilities.setCapability("platform", Platform.VISTA);
         	driver = new RemoteWebDriver(
 					new URL(AutomationConstants.SELENIUM_GRID_URL),
 					capabilities);
