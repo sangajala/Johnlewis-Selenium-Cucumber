@@ -36,6 +36,7 @@ public class LoginPage extends BasePage {
     public LoginPage() {
 
         PageFactory.initElements(driver, this);
+        driver.navigate().refresh();
         if (!id_username.isDisplayed())
             throw new RuntimeException("Unable to see login");
     }

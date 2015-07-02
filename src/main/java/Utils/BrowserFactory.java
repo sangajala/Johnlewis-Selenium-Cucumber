@@ -1,14 +1,13 @@
 package Utils;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.DriverCommand;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
@@ -80,7 +79,7 @@ protected static WebDriver startRemoteWebBrowser(String browser,String URL)
 
         	capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         	capabilities.setCapability("platform", Platform.VISTA);
-        	driver = new RemoteWebDriver(
+        	driver = new ScreenShotRemoteWebDriver(
 					new URL(AutomationConstants.SELENIUM_GRID_URL),
 					capabilities);
            // return driver;
@@ -123,6 +122,21 @@ protected static WebDriver startRemoteWebBrowser(String browser,String URL)
     driver.get(URL);
     return driver;
     }
+
+        public static class ScreenShotRemoteWebDriver extends RemoteWebDriver implements TakesScreenshot {
+            public ScreenShotRemoteWebDriver(URL url, DesiredCapabilities dc) {
+                super(url, dc);
+            }
+
+
+            public <X> X getScreenshotAs(OutputType<X> target)
+                    throws WebDriverException {
+                if ((Boolean) getCapabilities().getCapability(CapabilityType.TAKES_SCREENSHOT)) {
+                    return target.convertFromBase64Png(execute(DriverCommand.SCREENSHOT).getValue().toString());
+                }
+                return null;
+            }
+        }
 
 
 }

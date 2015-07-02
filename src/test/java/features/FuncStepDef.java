@@ -2,6 +2,7 @@ package features;
 
 import Utils.AutomationConstants;
 import Utils.BrowserFactory;
+import Utils.Utils;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -50,7 +51,8 @@ public class FuncStepDef {
 
         }
 
-        driver.navigate().to("https://app.whispir.it/web_gen/Check_Login?logout=true");
+        Utils.sleep(5);
+        driver.navigate().to("https://app.whispir.it/");
 
     }
 
