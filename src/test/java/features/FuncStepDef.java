@@ -50,6 +50,8 @@ public class FuncStepDef {
 
         }
 
+        driver.navigate().to("https://app.whispir.it/web_gen/Check_Login?logout=true");
+
     }
 
 
@@ -90,4 +92,7 @@ public class FuncStepDef {
     public void the_Subject_should_be_fail(String arg1) throws Throwable {
         Assert.assertFalse(homePage.checkMessage(arg1));
     }
+
+
+
 }
