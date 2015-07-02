@@ -2,7 +2,6 @@ package Utils;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -60,30 +59,20 @@ public abstract class BrowserFactory
 protected static WebDriver startRemoteWebBrowser(String browser,String URL)
 {
 
-    if(false)
+    if(AutomationConstants.REMOTE_BROWSER.equalsIgnoreCase("true"))
     {
         try
         {
 
-           System.setProperty("webdriver.chrome.driver", "/Users/sriramangajala/Documents/Automation/chromedriver");
+       //    System.setProperty("webdriver.chrome.driver", "/Users/sriramangajala/Documents/Automation/chromedriver");
             //  driver=new ChromeDriver();
         	System.out.println("grid started...");
         	DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-            capabilities.setCapability("browser", System.getProperty("browser"));
+            capabilities.setCapability("browser", AutomationConstants.BROWSER_TYPE);
         	capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-        	capabilities.setCapability("platform", Platform.VISTA);
-        	//capabilities.setCapability("version", "33");
-			/*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-			capabilities.setCapability("version", "17");
-			capabilities.setCapability("platform", Platform.XP);*/
-//			driver = new RemoteWebDriver(
-//					new URL("http://sansbijo:6504eb7f-2bdf-4f45-b485-6580c876217b@ondemand.saucelabs.com:80/wd/hub"),capabilities);
-//					capabilities);
-			driver = new RemoteWebDriver(
-//					new URL("http://127.0.0.1:4444/wd/hub"),
-//					capabilities);
-                  //  new URL("http://ctji4eDhjyhlSItJ839igchsEAihFSOH:bYQ52jdcIlnqTH0RAZ0H270wy9E4RjCT@8FY4K0546DEXW8MC.gridlastic.com:80/wd/hub"),
-					new URL("http://cb_ram-core:2c259106-416c-4890-9e0a-9f09ccb96c74@ondemand.saucelabs.com:80/wd/hub"),
+//        	capabilities.setCapability("platform", Platform.VISTA);
+        	driver = new RemoteWebDriver(
+					new URL(AutomationConstants.SELENIUM_GRID_URL),
 					capabilities);
            // return driver;
         }
