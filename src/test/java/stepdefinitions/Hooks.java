@@ -20,7 +20,7 @@ public class Hooks {
 
     @BeforeClass
     public static void openBrowser() throws MalformedURLException {
-        LOGGER.info("Called openBrowser");
+        LOGGER.info("Opening Browser.....");
         driver = BrowserFactory.getDriver();
         driver.get(AutomationConstants.URL);
         driver.manage().deleteAllCookies();

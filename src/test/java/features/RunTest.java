@@ -20,7 +20,7 @@ import java.net.URL;
 
 @RunWith(Cucumber.class)
 @Cucumber.Options(format = {"pretty","html:target/whisper-html-report","json:target/whisper_report.json"},
-tags = {"@new"}
+tags = {"@smoke"}
 )
 public class RunTest{
     static WebDriver driver;
@@ -37,7 +37,9 @@ public class RunTest{
             e.printStackTrace();
         }
 
-        generatePrettyReportOnTheGo();
+        if(AutomationConstants.local_reports)
+            generatePrettyReportOnTheGo();
+
         addShutdownHook();
 
 

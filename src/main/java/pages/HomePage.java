@@ -9,19 +9,19 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 /**
  * Created by sriramangajala on 02/07/15.
  */
 public class HomePage extends BasePage {
 
     static Logger LOGGER = Logger.getLogger(HomePage.class);
-    @FindBy(how = How.TAG_NAME, using = "h2")
+
+
+    @FindBy(how = How.CLASS_NAME, using = "dealer-name")
     public WebElement header;
 
-    @FindBy(how = How.ID, using = "toList")
-    public WebElement toList;
-    @FindBy(how = How.ID, using = "tagsElem")
-    public WebElement tagsElem;
     @FindBy(how = How.ID, using = "Subject")
     public WebElement Subject;
 
@@ -32,29 +32,14 @@ public class HomePage extends BasePage {
     public HomePage() {
 
         PageFactory.initElements(driver, this);
-        Utils.waitElementPresent(By.tagName("h2"));
-        if (!header.isDisplayed())
+        Utils.waitElementPresent(By.linkText("Home"));
+        if (!driver.findElement(By.linkText("Home")).isDisplayed())
             throw new RuntimeException("No home page shown");
     }
 
-    public void createMessageOfType(String type) {
-        header.click();
-        Utils.sleep(3);
-        Utils.waitAndClickOnLink("New Message");
-//        Utils.waitAndClickOnLink(type);
-
-    }
-
-    public void enterMessageHeaders(String to, String label, String subject) {
-
-        LOGGER.info("Entering data into the field To:"+to+" Label:"+label+" Subject:"+subject);
-        Utils.waitElementPresent(By.id("toList"));
-        toList.sendKeys(to);
-        tagsElem.sendKeys(label);
-        Subject.sendKeys(subject);
 
 
-    }
+
 
     public void enterBody(String body) {
 
@@ -69,8 +54,30 @@ public class HomePage extends BasePage {
 //        driver.findElement(By.xpath("//button[contains(text(),'Send')]")).click();
     }
 
-    public boolean checkMessage(String message) {
-        Utils.waitElementPresent(By.linkText(message));
-        return driver.findElement(By.linkText(message)).isDisplayed();
+    public boolean checkHeader(String message) {
+        return header.getText().contains(message);
+    }
+
+
+    public boolean getHeader(String header) {
+        return this.header.getText().contains(header);
+    }
+
+    public boolean getButton(String buttontext) {
+        List<WebElement> elements = driver.findElements(By.tagName("button"));
+
+        for(WebElement element:elements)
+        {
+            try {
+                element.findElement(By.tagName("span")).getText().contains(buttontext);
+                return true;
+            }
+            catch (Exception e)
+            {
+                //ignore
+            }
+        }
+
+        return false;
     }
 }

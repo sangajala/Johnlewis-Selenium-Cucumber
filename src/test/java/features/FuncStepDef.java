@@ -3,12 +3,14 @@ package features;
 import Utils.AutomationConstants;
 import Utils.BrowserFactory;
 import Utils.Utils;
+import Utils.VerifyUtils;
+import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -16,6 +18,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import pages.HomePage;
 import pages.LoginPage;
+
+import java.util.Map;
 
 /**
  * Created by sriramangajala on 02/07/15.
@@ -64,37 +68,59 @@ public class FuncStepDef {
 
     }
 
-    @When("^I want to create a message with type \"(.*?)\"$")
-    public void i_want_to_create_a_message_with_type(String type) throws Throwable {
-        homePage.createMessageOfType(type);
-
-    }
-
-    @When("^full the receipt field To \"(.*?)\" label \"(.*?)\" Subject \"(.*?)\"$")
-    public void full_the_receipt_field_To_label_Subject(String to, String label, String subject) throws Throwable {
-        homePage.enterMessageHeaders(to,label,subject);
-    }
-
-    @When("^enter the body of the message as \"(.*?)\"$")
-    public void enter_the_body_of_the_message_as(String arg1) throws Throwable {
-        homePage.enterBody(arg1);
-    }
-
-    @When("^send the message$")
-    public void send_the_message() throws Throwable {
-        homePage.sendMessage();
-    }
 
     @Then("^the Subject should be \"(.*?)\"$")
     public void the_Subject_should_be(String arg1) throws Throwable {
-        Assert.assertTrue(homePage.checkMessage(arg1));
+        Assert.assertTrue(homePage.checkHeader(arg1));
     }
 
     @Then("^the Subject should be \"(.*?)\" and fail$")
     public void the_Subject_should_be_fail(String arg1) throws Throwable {
-        Assert.assertFalse(homePage.checkMessage(arg1));
+        Assert.assertFalse(homePage.checkHeader(arg1));
     }
 
 
+    @Given("^user open a browser$")
+    public void user_open_a_browser() throws Throwable {
 
+    }
+
+    @And("^opens the url for \"([^\"]*)\" brand$")
+    public void opens_the_url_for_brand(String brand) throws Throwable {
+
+        if(brand.equalsIgnoreCase("Armstrong Auto"))
+        {
+            driver.get(AutomationConstants.ArmstrongAutoURL);
+        }
+    }
+
+    @Then("^the page should be opened$")
+    public void the_page_should_be_opened() throws Throwable {
+
+        homePage = new HomePage();
+    }
+
+    @And("^the brand name should be shown as \"([^\"]*)\"$")
+    public void the_brand_name_should_be_shown_brand_name_in_header_as(String header) throws Throwable {
+
+        VerifyUtils.True("Checking if user can see header",homePage.checkHeader(header));
+    }
+
+    @And("^show the below elements$")
+    public void show_the_below_elements(DataTable dataTable) throws Throwable {
+        Map<String, String> data = dataTable.asMap(String.class,String.class);
+        homePage.checkElements(data);
+
+    }
+
+    @Then("^a header with name \"(.*?)\"$")
+    public void a_header_with_name(String header) throws Throwable {
+        VerifyUtils.True("Checking the header is "+header,homePage.getHeader(header));
+    }
+
+    @Then("^a button with name \"(.*?)\" is shown$")
+    public void a_button_with_name_is_shown(String buttontext) throws Throwable {
+
+        VerifyUtils.True("Checking the button with text is "+buttontext,homePage.getButton(buttontext));
+    }
 }
