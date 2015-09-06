@@ -3,6 +3,7 @@ package features;
 import Utils.AutomationConstants;
 import Utils.BrowserFactory;
 import Utils.CreatePrettyReport;
+import Utils.Utils;
 import cucumber.api.junit.Cucumber;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -31,7 +32,8 @@ public class RunTest{
     public static void start()
     {
         try {
-            BrowserFactory.StartBrowser(AutomationConstants.BROWSER_TYPE, AutomationConstants.URL);
+            BrowserFactory.StartBrowser(AutomationConstants.BROWSER_TYPE, AutomationConstants.ENV_URL);
+            Utils.setTestEnv(AutomationConstants.TEST_ENV,AutomationConstants.CHECKOUT_NEW_OLD);
             driver = BrowserFactory.driver;
         } catch (Exception e) {
             e.printStackTrace();

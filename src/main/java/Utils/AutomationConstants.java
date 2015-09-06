@@ -22,6 +22,8 @@ public class AutomationConstants {
     public static final String ArmstrongAutoURL = "http://www.jeeptoowoomba.com.au/deals/chrysler-300-run-out";
 
 
-    public static final String URL = "http://www.motortrak.com/";
+    public static final String ENV_URL = "http://uat-johnlewis-main.udev1a.net/h5/chooseEnv";
     public static final boolean local_reports = false;
+    public static final String TEST_ENV = "syst2.project4.com";
+    public static final String CHECKOUT_NEW_OLD = "new";
 }

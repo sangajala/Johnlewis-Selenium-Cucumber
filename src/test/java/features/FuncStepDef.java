@@ -2,7 +2,6 @@ package features;
 
 import Utils.AutomationConstants;
 import Utils.BrowserFactory;
-import Utils.Utils;
 import Utils.VerifyUtils;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
@@ -11,6 +10,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -55,8 +55,7 @@ public class FuncStepDef {
 
         }
 
-        Utils.sleep(5);
-        driver.navigate().to("https://app.whispir.it/");
+
 
     }
 
@@ -122,5 +121,17 @@ public class FuncStepDef {
     public void a_button_with_name_is_shown(String buttontext) throws Throwable {
 
         VerifyUtils.True("Checking the button with text is "+buttontext,homePage.getButton(buttontext));
+    }
+
+    @When("^(?:open|close) the ham burger menu$")
+    public void open_the_ham_burger_menu() throws Throwable {
+        homePage = new HomePage();
+        homePage.openHamBurgerMenu();
+    }
+
+    @Then("^I should see the following option$")
+    public void I_should_see_the_following_option(DataTable dataTable) throws Throwable {
+        Map<String, String> data = dataTable.asMap(String.class,String.class);
+        homePage.checkElements(data);
     }
 }

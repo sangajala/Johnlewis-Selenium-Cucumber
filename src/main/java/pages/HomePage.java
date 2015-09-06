@@ -25,15 +25,18 @@ public class HomePage extends BasePage {
     @FindBy(how = How.ID, using = "Subject")
     public WebElement Subject;
 
-    @FindBy(how = How.ID, using = "editableContent")
+    @FindBy(how = How.CLASS_NAME, using = "hamburger_button")
+    public WebElement hamburger_button;
+
+    @FindBy(how = How.ID, using = "")
     public WebElement editableContent;
 
 
     public HomePage() {
 
         PageFactory.initElements(driver, this);
-        Utils.waitElementPresent(By.linkText("Home"));
-        if (!driver.findElement(By.linkText("Home")).isDisplayed())
+        Utils.waitElementPresent(By.linkText("Basket"));
+        if (!driver.findElement(By.linkText("Basket")).isDisplayed())
             throw new RuntimeException("No home page shown");
     }
 
@@ -79,5 +82,9 @@ public class HomePage extends BasePage {
         }
 
         return false;
+    }
+
+    public void openHamBurgerMenu() {
+        hamburger_button.click();
     }
 }

@@ -96,4 +96,12 @@ public class Utils {
     }
 
 
+    public static void setTestEnv(String testEnv, String checkoutNewOld) {
+        if(checkoutNewOld.equalsIgnoreCase("new"))
+            driver.findElement(By.linkText("enable new checkout")).click();
+        else
+            driver.findElement(By.linkText("enable old checkout")).click();
+        driver.findElement(By.linkText(testEnv)).click();
+        driver.findElement(By.linkText("Go to homepage")).click();
+    }
 }

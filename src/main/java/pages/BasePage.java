@@ -48,6 +48,10 @@ public class BasePage {
                 {
                     VerifyUtils.True("Checking element type "+key+" with name "+value,driver.findElement(By.tagName(value)).isDisplayed());
                 }
+                else if(key.equalsIgnoreCase("button"))
+                {
+                    VerifyUtils.True("Checking element type "+key+" with name "+value,driver.findElement(By.xpath("//button[text()='"+value+"']")).isDisplayed());
+                }
                 else
                     VerifyUtils.Info("Not valid element type "+key);
 

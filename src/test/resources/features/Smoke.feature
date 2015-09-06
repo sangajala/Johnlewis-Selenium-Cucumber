@@ -1,15 +1,39 @@
 @smoke
-Feature: Smoke test pack for motortrack
+Feature: Smoke test pack for john lewis
 
 
-  Scenario: Check various websites and its content matchs as expected
+  Scenario: check the home page is displayed with options
 
     Given user open a browser
-    And opens the url for "Armstrong Auto" brand
-    Then the page should be opened
-    And the brand name should be shown as "Armstrong Auto"
-    And a header with name "Armstrong Auto"
-    And a button with name "Send message" is shown
+    When open the ham burger menu
+    Then I should see the following option
+      | link | Home                 |
+      | link | Browse by Department |
+      | link | Partnership Card     |
+      | link | Download our App     |
+      | link | Contact Us           |
+    When close the ham burger menu
+    Then I should see the following option
+    |button|Sign up               |
+
+
+    Scenario Outline: User can find store
+
+      Given user open a browser
+      When he open an all the shops
+      Then he the branch "<branch>" should be shown
+      And he opens the branch
+      Then the details of the branch should be shown
+
+      Examples:
+      |Branch|
+      |Glasgow|
+
+
+
+
+
+
 
 
 
