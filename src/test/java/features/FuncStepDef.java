@@ -134,4 +134,31 @@ public class FuncStepDef {
         Map<String, String> data = dataTable.asMap(String.class,String.class);
         homePage.checkElements(data);
     }
+
+    @When("^he open an all the shops$")
+    public void he_open_an_all_the_shops() throws Throwable {
+        homePage = new HomePage();
+        homePage.openAllShops();
+
+    }
+
+    String branch;
+    @Then("^the branch \"(.*?)\" should be shown$")
+    public void he_the_branch_should_be_shown(String branch) throws Throwable {
+
+        homePage.checkBranchIsShown(branch);
+        this.branch = branch;
+    }
+
+    @Then("^he opens the branch$")
+    public void he_opens_the_branch() throws Throwable {
+        homePage.openTheBranch(branch);
+
+    }
+
+    @Then("^the details of the branch should be shown$")
+    public void the_details_of_the_branch_should_be_shown() throws Throwable {
+
+        homePage.checkBranchText(branch);
+    }
 }

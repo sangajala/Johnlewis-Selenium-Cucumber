@@ -21,7 +21,7 @@ Feature: Smoke test pack for john lewis
 
       Given user open a browser
       When he open an all the shops
-      Then he the branch "<branch>" should be shown
+      Then the branch "<Branch>" should be shown
       And he opens the branch
       Then the details of the branch should be shown
 

@@ -24,6 +24,6 @@ public class AutomationConstants {
 
     public static final String ENV_URL = "http://uat-johnlewis-main.udev1a.net/h5/chooseEnv";
     public static final boolean local_reports = false;
-    public static final String TEST_ENV = "syst2.project4.com";
+    public static final String TEST_ENV = "syst.project4.com";
     public static final String CHECKOUT_NEW_OLD = "new";
 }

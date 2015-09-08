@@ -1,6 +1,7 @@
 package pages;
 
 import Utils.Utils;
+import Utils.VerifyUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -31,6 +32,12 @@ public class HomePage extends BasePage {
     @FindBy(how = How.ID, using = "")
     public WebElement editableContent;
 
+    @FindBy(how = How.CSS, using = "span.header_links.shop_link")
+    public WebElement header_links_shop_link;
+
+    @FindBy(how = How.LINK_TEXT, using = "Show all shops")
+    public WebElement Show_all_shops;
+
 
     public HomePage() {
 
@@ -39,9 +46,6 @@ public class HomePage extends BasePage {
         if (!driver.findElement(By.linkText("Basket")).isDisplayed())
             throw new RuntimeException("No home page shown");
     }
-
-
-
 
 
     public void enterBody(String body) {
@@ -69,14 +73,11 @@ public class HomePage extends BasePage {
     public boolean getButton(String buttontext) {
         List<WebElement> elements = driver.findElements(By.tagName("button"));
 
-        for(WebElement element:elements)
-        {
+        for (WebElement element : elements) {
             try {
                 element.findElement(By.tagName("span")).getText().contains(buttontext);
                 return true;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 //ignore
             }
         }
@@ -86,5 +87,24 @@ public class HomePage extends BasePage {
 
     public void openHamBurgerMenu() {
         hamburger_button.click();
+    }
+
+    public void openAllShops() {
+        header_links_shop_link.click();
+        Utils.sleep(3);
+        Show_all_shops.click();
+
+    }
+
+    public void checkBranchIsShown(String branch) {
+        VerifyUtils.True("Checking that the branch " + branch + " is available", Utils.isElementPresent(By.linkText(branch)));
+    }
+
+    public void openTheBranch(String branch) {
+        driver.findElement(By.linkText(branch)).click();
+    }
+
+    public void checkBranchText(String branch) {
+        VerifyUtils.ContainsTrue("Checking the branch details are shown " + branch, Utils.getVisibleText(), "John Lewis " + branch);
     }
 }
