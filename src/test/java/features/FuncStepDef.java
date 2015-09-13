@@ -12,12 +12,11 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.*;
+import pages.Basketpage;
 import pages.HomePage;
 import pages.LoginPage;
+import pages.SearchResultPage;
 
 import java.util.Map;
 
@@ -29,6 +28,9 @@ public class FuncStepDef {
     public WebDriver driver;
     public LoginPage loginPage;// = new LoginPage();
     private HomePage homePage;
+    private SearchResultPage searchResultPage;
+    private Basketpage basketpage;
+
 
 
     @Before
@@ -127,6 +129,7 @@ public class FuncStepDef {
     public void open_the_ham_burger_menu() throws Throwable {
         homePage = new HomePage();
         homePage.openHamBurgerMenu();
+
     }
 
     @Then("^I should see the following option$")
@@ -160,5 +163,36 @@ public class FuncStepDef {
     public void the_details_of_the_branch_should_be_shown() throws Throwable {
 
         homePage.checkBranchText(branch);
+    }
+
+    @Given("^user is in home page$")
+    public void user_is_in_home_page() throws Throwable {
+
+    }
+
+    @When("^I search for \"([^\"]*)\"$")
+    public void I_search_for(String searchKeyword) throws Throwable {
+        homePage = new HomePage();
+        homePage.searchWithKeyword(searchKeyword);
+
+        Assert.assertFalse(driver.findElement(By.tagName("body")).getText().contains("Sorry, we couldn't find any results matching"));
+
+
+
+    }
+
+
+    @And("^added an item to the basket with title \"([^\"]*)\"$")
+    public void added_an_item_to_the_basket_with_title(String title) throws Throwable {
+        searchResultPage = new SearchResultPage();
+        searchResultPage.addFirstItemIntoTheBasket();
+    }
+
+    @Then("^an item should be available in basket$")
+    public void an_item_should_be_available_in_basket() throws Throwable {
+        basketpage = new Basketpage();
+        basketpage.checkItemIsAdded();
+
+
     }
 }

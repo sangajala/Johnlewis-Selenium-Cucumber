@@ -2,8 +2,8 @@ package features;
 
 import Utils.AutomationConstants;
 import Utils.BrowserFactory;
-import Utils.CreatePrettyReport;
 import Utils.Utils;
+import Utils.CreatePrettyReport;
 import cucumber.api.junit.Cucumber;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -21,7 +21,7 @@ import java.net.URL;
 
 @RunWith(Cucumber.class)
 @Cucumber.Options(format = {"pretty","html:target/whisper-html-report","json:target/whisper_report.json"},
-tags = {"@smoke"}
+tags = {"@temp"}
 )
 public class RunTest{
     static WebDriver driver;

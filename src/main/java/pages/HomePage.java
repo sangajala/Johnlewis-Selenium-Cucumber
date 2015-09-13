@@ -5,6 +5,7 @@ import Utils.VerifyUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -33,10 +34,17 @@ public class HomePage extends BasePage {
     public WebElement editableContent;
 
     @FindBy(how = How.CSS, using = "span.header_links.shop_link")
-    public WebElement header_links_shop_link;
+    public WebElement shop_button;
+
+    @FindBy(how = How.CSS, using = "span.header_links.search_link")
+    public WebElement search_button;
 
     @FindBy(how = How.LINK_TEXT, using = "Show all shops")
     public WebElement Show_all_shops;
+
+    @FindBy(how = How.NAME, using = "search-keywords")
+    public WebElement keyword_input_textbox;
+
 
 
     public HomePage() {
@@ -90,7 +98,7 @@ public class HomePage extends BasePage {
     }
 
     public void openAllShops() {
-        header_links_shop_link.click();
+        shop_button.click();
         Utils.sleep(3);
         Show_all_shops.click();
 
@@ -106,5 +114,21 @@ public class HomePage extends BasePage {
 
     public void checkBranchText(String branch) {
         VerifyUtils.ContainsTrue("Checking the branch details are shown " + branch, Utils.getVisibleText(), "John Lewis " + branch);
+    }
+
+
+    public void searchWithKeyword(String keyword)
+    {
+        //click on search icon
+        search_button.click();
+        //enter the product name
+        Utils.sleep(2);
+
+        keyword_input_textbox.clear();
+        keyword_input_textbox.sendKeys(keyword);
+
+        Utils.sleep(1);
+        //click on search button
+        keyword_input_textbox.sendKeys(Keys.ENTER.toString());
     }
 }
