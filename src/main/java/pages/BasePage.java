@@ -14,6 +14,7 @@ public class BasePage {
 
     WebDriver driver = BrowserFactory.getDriver();
 
+
     public void checkElements(Map<String, String> data) {
         System.out.println("data = [" + data + "]");
 

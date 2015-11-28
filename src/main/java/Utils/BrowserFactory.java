@@ -70,10 +70,12 @@ protected static WebDriver startRemoteWebBrowser(String browser,String URL)
         	DesiredCapabilities capabilities = new DesiredCapabilities();
             if(System.getProperty("Browser").equalsIgnoreCase("firefox"))
             {
+                System.out.println("grid firefox started...");
                 capabilities = DesiredCapabilities.firefox();
             }
             else if(System.getProperty("Browser").equalsIgnoreCase("chrome"))
             {
+                System.out.println("grid chrome started...");
                 capabilities = DesiredCapabilities.chrome();
             }
 
@@ -96,6 +98,7 @@ protected static WebDriver startRemoteWebBrowser(String browser,String URL)
         {
             if(browser.equalsIgnoreCase("Firefox"))
             {
+                System.out.println("local firefox started...");
             	FirefoxProfile firefoxprofile = new FirefoxProfile(); 
             	firefoxprofile.setAssumeUntrustedCertificateIssuer(true); 
             	firefoxprofile.setAcceptUntrustedCertificates(true); 
@@ -106,6 +109,7 @@ protected static WebDriver startRemoteWebBrowser(String browser,String URL)
             }
             else if(browser.equalsIgnoreCase("chrome"))
             {
+                System.out.println("local chrome started...");
                 //System.setProperty("webdriver.chrome.driver", "C:\\Automation\\chromedriver.exe");
               //  driver=new ChromeDriver();
                 System.setProperty("webdriver.chrome.driver", "\\Users\\bijojosephbj\\Desktop\\Automation\\Chromeexe/\\chromedriver");

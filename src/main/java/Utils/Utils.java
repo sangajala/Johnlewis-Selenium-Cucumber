@@ -97,6 +97,7 @@ public class Utils {
 
 
     public static void setTestEnv(String testEnv, String checkoutNewOld) {
+
         if(checkoutNewOld.equalsIgnoreCase("new"))
             driver.findElement(By.linkText("enable new checkout")).click();
         else

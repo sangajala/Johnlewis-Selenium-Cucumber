@@ -76,6 +76,11 @@
             <version>LATEST</version>
         </dependency>
         <dependency>
+            <groupId>com.relevantcodes</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>2.05</version>
+        </dependency>
+        <dependency>
             <groupId>net.masterthought</groupId>
             <artifactId>cucumber-sandwich</artifactId>
             <version>0.0.2</version>

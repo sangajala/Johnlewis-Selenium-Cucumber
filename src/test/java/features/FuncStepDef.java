@@ -3,6 +3,9 @@ package features;
 import Utils.AutomationConstants;
 import Utils.BrowserFactory;
 import Utils.VerifyUtils;
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -13,6 +16,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.logging.Logs;
 import pages.Basketpage;
 import pages.HomePage;
 import pages.LoginPage;
@@ -23,6 +27,8 @@ import java.util.Map;
 /**
  * Created by sriramangajala on 02/07/15.
  */
+
+
 public class FuncStepDef {
 
     public WebDriver driver;
@@ -30,6 +36,8 @@ public class FuncStepDef {
     private HomePage homePage;
     private SearchResultPage searchResultPage;
     private Basketpage basketpage;
+    ExtentReports report;
+    ExtentTest logger;
 
 
 
@@ -39,27 +47,7 @@ public class FuncStepDef {
         driver = BrowserFactory.getDriver();
     }
 
-    @After
-    /**
-     * Embed a screenshot in test report if test is marked as failed
-     */
-    public void embedScreenshot(Scenario scenario) {
 
-        if (scenario.isFailed()) {
-            try {
-                scenario.write("Current Page URL is " + driver.getCurrentUrl());
-//            byte[] screenshot = getScreenshotAs(OutputType.BYTES);
-                byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-                scenario.embed(screenshot, "image/png");
-            } catch (WebDriverException somePlatformsDontSupportScreenshots) {
-                System.err.println(somePlatformsDontSupportScreenshots.getMessage());
-            }
-
-        }
-
-
-
-    }
 
 
     @Given("^I am logged in user$")
@@ -167,17 +155,18 @@ public class FuncStepDef {
 
     @Given("^user is in home page$")
     public void user_is_in_home_page() throws Throwable {
+        report = new ExtentReports("//Users//riyan//advancedReports1.html");
+        logger= report.startTest("user is in home page");
 
     }
 
     @When("^I search for \"([^\"]*)\"$")
     public void I_search_for(String searchKeyword) throws Throwable {
+
+        logger.log(LogStatus.INFO,"I search for ", searchKeyword);
         homePage = new HomePage();
         homePage.searchWithKeyword(searchKeyword);
-
         Assert.assertFalse(driver.findElement(By.tagName("body")).getText().contains("Sorry, we couldn't find any results matching"));
-
-
 
     }
 
@@ -190,9 +179,45 @@ public class FuncStepDef {
 
     @Then("^an item should be available in basket$")
     public void an_item_should_be_available_in_basket() throws Throwable {
+        logger.log(LogStatus.INFO,"an item should be available in basket");
         basketpage = new Basketpage();
         basketpage.checkItemIsAdded();
+        logger.log(LogStatus.PASS,"an item should be available in basket");
 
 
     }
+
+
+
+
+
+
+
+
+    @After
+    /**
+     * Embed a screenshot in test report if test is marked as failed
+     */
+    public void embedScreenshot(Scenario scenario) {
+
+        if (scenario.isFailed()) {
+            try {
+                scenario.write("Current Page URL is " + driver.getCurrentUrl());
+//            byte[] screenshot = getScreenshotAs(OutputType.BYTES);
+                byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+                scenario.embed(screenshot, "image/png");
+            } catch (WebDriverException somePlatformsDontSupportScreenshots) {
+                System.err.println(somePlatformsDontSupportScreenshots.getMessage());
+            }
+
+        }
+
+
+
+    }
+
+
+
+
+
 }
