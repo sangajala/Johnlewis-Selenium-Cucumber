@@ -1,5 +1,5 @@
 @smoke
-Feature: Smoke test pack for john lewis
+Feature: Smoke test pack for john lewis test
 
 
   Scenario: check the home page is displayed with options
